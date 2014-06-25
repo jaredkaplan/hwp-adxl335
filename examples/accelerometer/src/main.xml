@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<program xmlns="http://www.kinoma.com/kpr/1">
+
+    <require id="ADXL335" path="ADXL335" />
+    <require id="HardwarepinsModule" path="HardwarepinsModule"/>
+    
+    <container id="MainContainer" top="0" left="0" bottom="0" right="0">
+        <skin color="white"/>
+        <behavior>
+            <method id="onDisplayed" params="content">
+                <![CDATA[
+                    // create a new ADXL335 sensor object instance
+                    var adxl335 = new ADXL335.ADXL335( 56, 55, 54 );
+                    
+                    // initialize the sensor and start polling
+                    adxl335.init();
+                    adxl335.poll( 10, HardwarepinsModule.MILLISECONDS, "/adxl335/value" );
+                ]]>
+            </method>
+            <method id="handleAccelerometerChanged" params="content, data">
+                <![CDATA[
+                    var canvas = content.canvas;
+                
+                    // convert the normalized x and y accelerometer values to
+                    // coordinates in the container
+                    var x = Math.round( canvas.width * data.x );
+                    var y = Math.round( canvas.height * data.y );
+                    
+                    // draw the crosshair on the canvas with the coordinates
+                    // that correspond to the accelerometer data values
+                    var ctx = canvas.getContext( "2d" );
+                    
+                    // clear the canvas drawing area
+                    ctx.clearRect( 0, 0, canvas.width, canvas.height );
+                    
+                    // create the path for the crosshair
+                    ctx.beginPath();
+                    ctx.moveTo( x - 10, y );
+                    ctx.lineTo( x + 10, y );
+                    ctx.moveTo( x, y - 10);
+                    ctx.lineTo( x, y + 10 );
+                    
+                    // setup the stroke style and draw the path
+                    ctx.strokeStyle = "#ff0000";
+                    ctx.lineWidth = 5;
+                    ctx.stroke();
+                    
+                    // update the info string with the drawing coordinates
+                    content.info.string = "x: " + x + " y: " + y;
+                ]]>
+            </method>
+        </behavior>
+        <canvas name="canvas" top="0" left="0" bottom="0" right="0"/>
+        <label name="info" top="5" left="5">
+            <style font="18px Arial" color="black"/>
+        </label>
+    </container>
+
+    <script>
+        <![CDATA[
+            // create the main container template instance
+            var mainContainer = new MainContainer();
+        
+            // add the main container to the application
+            application.add( mainContainer );
+        ]]>
+    </script>
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Handler that is called when polling the accelerometer state -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+   <handler path="/adxl335/value">
+      <behavior>
+         <method id="onInvoke" params="content, message">
+                <![CDATA[
+                    var data = message.requestObject;
+                
+                    if( data != null )
+                    {
+                        // constrain the x and y values to a range that allows the device
+                        // to be rotated 90 degrees in each direction from center
+                        var x = Math.min( Math.max( data.x, 0.4 ), 0.6 ) - 0.4;
+                        var y = 1 - Math.min( Math.max( data.y, 0.4 ), 0.6 ) - 0.4;
+                        
+                        // normalize the x and y values
+                        var coords = { x: (x / 0.2), y: (y / 0.2) }
+
+                        // delegate the value changed event to the main container
+                        mainContainer.delegate( "handleAccelerometerChanged", coords );
+                    }
+                ]]>
+         </method>
+      </behavior>
+   </handler>
+</program>

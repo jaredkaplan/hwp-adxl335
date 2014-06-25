@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module xmlns="http://www.kinoma.com/kpr/1">
+
+    <!-- +++++++++++++++++++ -->
+    <!-- ADXL335 BLL scripts -->
+    <!-- +++++++++++++++++++ -->
+
+    <function id="createADXL335Result" params="x, y, z">
+        <![CDATA[
+            return { x:x, y:y, z:z };
+        ]]>
+    </function>
+    <function id="adxl335_bll_init" params="parameters">
+        <![CDATA[
+            a2d.init( parameters.pins );
+        ]]>
+    </function>
+    <function id="adxl335_bll_get" params="parameters">
+        <![CDATA[
+            var pins = a2d.read( parameters.pins );
+            
+            // create the result
+            return createADXL335Result( pins[parameters.xpin], pins[parameters.ypin], pins[parameters.zpin] );        
+        ]]>
+    </function>
+    <function id="adxl335_bll_poll" params="parameters">
+        <![CDATA[
+            return adxl335_bll_get( parameters );        
+        ]]>
+    </function>
+
+</module>
