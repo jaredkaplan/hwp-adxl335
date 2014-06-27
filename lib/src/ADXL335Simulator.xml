@@ -59,7 +59,7 @@
                             valueID : "x",
                             minValue : 0,
                             maxValue : 1,
-                            value : 0.5,                                                 
+                            value : 0.5,
                             speed : 5
                         }
                     ),
@@ -71,7 +71,7 @@
                             valueID : "y",
                             minValue : 0,
                             maxValue : 1,
-                            value : 0.5,                                                 
+                            value : 0.5,
                             speed : 5
                         }
                     ),
@@ -83,7 +83,7 @@
                             valueID : "z",
                             minValue : 0,
                             maxValue : 1,
-                            value : 0.5,                                                 
+                            value : 0.5,
                             speed : 5
                         }
                     )
@@ -104,13 +104,13 @@
             <![CDATA[
                 var value = content.delegate( "getValue" );
                 var result = null;
-                
+
                 if( value != null )
                     result = ADXL335Scripts.createADXL335Result( value.x, value.y, value.z );
-                    
+
                 return result;
             ]]>
         </method>
     </behavior>
-    
+
 </module>

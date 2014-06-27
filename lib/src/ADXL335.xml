@@ -23,14 +23,14 @@
 
     <class id="ADXL335" like="HardwarepinsModule.Analog">
         <constructor params="xpin, ypin, zpin, config">
-            <![CDATA[            
+            <![CDATA[
                 HardwarepinsModule.Analog.call( this, [xpin, ypin, zpin], config );
             ]]>
         </constructor>
         <method id="configureParameters" params="parameters">
             <![CDATA[
                 HardwarepinsModule.Analog.prototype.configureParameters.call( this, parameters );
-                        
+
                 parameters.xpin = this.pins[0];
                 parameters.ypin = this.pins[1];
                 parameters.zpin = this.pins[2];
@@ -57,13 +57,13 @@
             ]]>
         </method>
     </class>
-    
+
     <!-- +++++++++++++++++++++++++++ -->
     <!-- ADXL335 simulator interface -->
     <!-- +++++++++++++++++++++++++++ -->
 
     <variable id="ADXL335_SIMULATOR_ID" value="'ADXL335'" />
-    
+
     <class id="ADXL335SimulatorInterface" like="HardwarepinsModule.SimulatorInterface">
         <method id="getSimulatorId">
             <![CDATA[

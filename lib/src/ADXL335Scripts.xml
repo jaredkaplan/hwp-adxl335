@@ -18,14 +18,14 @@
     <function id="adxl335_bll_get" params="parameters">
         <![CDATA[
             var pins = a2d.read( parameters.pins );
-            
+
             // create the result
-            return createADXL335Result( pins[parameters.xpin], pins[parameters.ypin], pins[parameters.zpin] );        
+            return createADXL335Result( pins[parameters.xpin], pins[parameters.ypin], pins[parameters.zpin] );
         ]]>
     </function>
     <function id="adxl335_bll_poll" params="parameters">
         <![CDATA[
-            return adxl335_bll_get( parameters );        
+            return adxl335_bll_get( parameters );
         ]]>
     </function>
 
