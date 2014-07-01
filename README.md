@@ -82,15 +82,15 @@ To continuously poll the data from the sensor, you must specify the polling inte
 adxl335.poll( time, units, callback, skipFirst );
 ```
 
-The units parameter must be one of the following string literal values:
-
-* milliseconds
-* seconds
-* minutes
-* microseconds
-* nanoseconds
-* hours
-* days
+>The units parameter must be one of the following string literal values:
+>
+>* milliseconds
+>* seconds
+>* minutes
+>* microseconds
+>* nanoseconds
+>* hours
+>* days
 
 When the ADXL335 object's callback handler is invoked, the result will be passed in the message requestObject property. The structure of the result object will be as follows:
 
